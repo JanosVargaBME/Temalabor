@@ -1,0 +1,67 @@
+.scoreDIV{
+    position: absolute;
+    top: 110px;
+    left: 300px;
+    color:yellow;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.endGameDIV{
+    position: absolute;
+    top: 590px;
+    left: 300px;
+    color:yellow;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.map{
+    position: relative;
+    margin: 0 auto;
+    width: 840px;
+    min-width: 840px;
+    height:810px;
+    background-color: white;
+    margin-top: 30px;
+}
+
+.basicObject{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-repeat:no-repeat;
+}
+
+.wall{
+    background-color: #00008b;
+    border: 1px solid grey;
+    border-radius: 15%;
+}
+
+.empty{
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 15%;
+}
+
+.pacman{
+    background-image: url("images/pac_right.gif");
+    background-color: yellow;
+    border-radius: 50%;
+}
+
+.monster{
+    background-color: red;
+    border-radius: 50%;
+}
+
+.pellet{
+    background-color: white;
+    border-radius: 100%;
+}
+
+.powerpellet{
+    background-color: green;
+    border-radius: 100%;
+}
