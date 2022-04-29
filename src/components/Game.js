@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import './gameStyle.css';
-import imagePAC from './images/pac_right.gif';
+
+require('./images/pac_right.gif');
 
 let pacman;
 let monsters = [];
 let colorRoute = false;
+let pause = true;
 
 class GameClass{
     constructor() {
@@ -156,7 +158,7 @@ class Field{
 
         this.data = document.createElement("DIV");
         //document.querySelector('.map').appendChild(this.data);
-        document.querySelector('.mapLMAO').appendChild(this.data);
+        document.querySelector('.map').appendChild(this.data);
         this.data.classList.add('basicObject');
         this.data.classList.add(this.type);
 
@@ -305,6 +307,8 @@ class Pacman extends Thing{
         this.image = "url('images/pac_" + direction + ".gif')";
 
         this.data.style.backgroundImage = this.image;
+
+        this.data.setAttribute("style", "background-image: url('./images/pac_right.gif');");
     }
 
     hitWithPowerPellet(game){
@@ -522,36 +526,52 @@ class Game extends Component{
         game.initBasicSetup();
 
         setInterval(function (){
-            for(let i = 0; i < game.map.length; i++){
-                for(let j = 0; j < game.map[0].length; j++){
-                    if(game.map[i][j].type === 'empty')
-                        game.map[i][j].data.style.backgroundColor = "black";
+            if(!pause) {
+                for (let i = 0; i < game.map.length; i++) {
+                    for (let j = 0; j < game.map[0].length; j++) {
+                        if (game.map[i][j].type === 'empty')
+                            game.map[i][j].data.style.backgroundColor = "black";
+                    }
                 }
-            }
 
-            if(pacman.lives > 0 && game.pelletCount > 0) {
-                for(let i = 0; i < monsters.length; i++)
-                    monsters[i].moveLogic(game, pacman);
-                pacman.hitWithMonster(game);
+                if (pacman.lives > 0 && game.pelletCount > 0) {
+                    for (let i = 0; i < monsters.length; i++)
+                        monsters[i].moveLogic(game, pacman);
+                    pacman.hitWithMonster(game);
+                }
             }
         }, 500);
 
         window.addEventListener('keyup', (e) =>{
             if(pacman.lives > 0 && game.pelletCount > 0) {
                 switch (e.key) {
+                    case 'Enter':
+                        if(colorRoute)
+                            colorRoute = false;
+                        else
+                            colorRoute = true;
+                        break;
                     case 'ArrowLeft':
+                        if(pause)
+                            break;
                         pacman.setPic("left");
                         pacman.move(game, 'left');
                         break;
                     case 'ArrowRight':
+                        if(pause)
+                            break;
                         pacman.setPic("right");
                         pacman.move(game, 'right');
                         break;
                     case 'ArrowUp':
+                        if(pause)
+                            break;
                         pacman.setPic("up");
                         pacman.move(game, 'up');
                         break;
                     case 'ArrowDown':
+                        if(pause)
+                            break;
                         pacman.setPic("down");
                         pacman.move(game, 'down');
                         break;
@@ -562,10 +582,10 @@ class Game extends Component{
                         monsters.pop();
                         break;
                     case ' ':
-                        if(colorRoute)
-                            colorRoute = false;
+                        if(pause)
+                            pause = false;
                         else
-                            colorRoute = true;
+                            pause = true;
                         break;
                     default:
                         break;
@@ -581,7 +601,7 @@ class Game extends Component{
 
         return (
             <div className="map">
-                <div className="mapLMAO"></div>
+                <div className="map"></div>
             </div>
 
         )
